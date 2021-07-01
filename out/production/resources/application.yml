@@ -1,0 +1,46 @@
+####################################################################################################
+## 공용
+####################################################################################################
+
+spring:
+  profiles:
+    active: local
+  jpa:
+    database: mysql
+    properties:
+      hibernate:
+        naming:
+          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+          implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+  datasource:
+    initialization-mode: never
+
+---
+
+####################################################################################################
+## local
+####################################################################################################
+
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/taes
+    username: root
+    password: password
+
+---
+
+####################################################################################################
+## test
+####################################################################################################
+
+spring:
+  config:
+    activate:
+      on-profile: junit-test
+  datasource:
+    url: jdbc:mysql://localhost:33006/test_db
+    username: root
+    password:

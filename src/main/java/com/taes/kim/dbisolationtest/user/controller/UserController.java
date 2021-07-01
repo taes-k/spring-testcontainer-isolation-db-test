@@ -4,17 +4,19 @@ import com.taes.kim.dbisolationtest.user.dto.UserDto;
 import com.taes.kim.dbisolationtest.user.entity.User;
 import com.taes.kim.dbisolationtest.user.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/users")
 public class UserController
 {
     private final UserService userService;
@@ -28,7 +30,7 @@ public class UserController
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping()
+    @GetMapping("/users")
     public List<UserDto.Res> getAllUsers()
     {
         return userService.getAllUsers().stream()
@@ -36,7 +38,15 @@ public class UserController
             .collect(Collectors.toList());
     }
 
-    @PostMapping()
+    @GetMapping("/user")
+    public UserDto.Res getUser(@RequestParam String id)
+    {
+        return userService.getUser(id)
+            .map(this::convertToDto)
+            .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
+    }
+
+    @PostMapping("/users")
     public UserDto.Res setUser(@RequestBody UserDto.Req userDto)
     {
         if (userService.isExistUser(userDto.getId()))
