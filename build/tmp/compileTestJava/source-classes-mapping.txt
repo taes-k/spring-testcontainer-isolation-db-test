@@ -1,0 +1,4 @@
+com/taes/kim/dbisolationtest/user/UserIT.java
+ com.taes.kim.dbisolationtest.user.UserIT
+com/taes/kim/dbisolationtest/IntegrationTest.java
+ com.taes.kim.dbisolationtest.IntegrationTest
