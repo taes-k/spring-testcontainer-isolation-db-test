@@ -41,6 +41,6 @@ spring:
     activate:
       on-profile: junit-test
   datasource:
-    url: jdbc:mysql://localhost:33006/test_db
+    url: jdbc:mysql://localhost:33006/test_db?autoReconnect=true
     username: root
     password:
